@@ -1,0 +1,42 @@
+[DOUGLAS]
+filepath = "dataset_douglas.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [4, 5, 6]
+
+[USA_BROWN]
+filepath = "dataset_usa_brown.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [5, 6, 7]
+skiprows = 4
+
+[USA_COBB_DOUGLAS]
+filepath = "dataset_usa_cobb-douglas.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [5, 6, 7]
+
+[USA_KENDRICK]
+filepath = "dataset_usa_kendrick.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [4, 5, 6]
+
+[USA_MC_CONNELL]
+filepath = "dataset_usa_mc_connell_brue.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [1, 2, 3]
+
+[USCB]
+filepath = "dataset_uscb.zip"
+header = 0
+names = ["series_id", "period", "value"]
+index_col = 1
+usecols = [9, 10, 11]
