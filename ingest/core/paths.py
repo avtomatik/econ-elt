@@ -8,6 +8,6 @@ Created on Wed May  7 20:06:28 2025
 
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATA_DIR = Path(__file__).resolve().parents[2] / "data" / "raw"
 
-DATA_DIR = BASE_DIR.joinpath('data')
+FILE_NAME = "mc-connell-brue.parquet"
