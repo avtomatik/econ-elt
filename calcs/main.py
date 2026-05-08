@@ -1,7 +1,7 @@
 from calcs.funcs import (calculate_power_function_fit_params_a,
                          calculate_power_function_fit_params_b,
                          calculate_power_function_fit_params_c)
-from core.backend import stockpile_usa_hist
+from core.warehouse import stockpile_usa_hist
 
 
 def main(year_base: int = 1980) -> None:

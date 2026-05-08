@@ -4,7 +4,7 @@ from sklearn.metrics import mean_squared_error
 
 
 def calculate_power_function_fit_params_a(
-    df: pd.DataFrame, params: tuple[float]
+    df: pd.DataFrame, params: tuple[float, float, float]
 ) -> None:
     """
     Parameters
@@ -42,7 +42,7 @@ def calculate_power_function_fit_params_a(
 
 
 def calculate_power_function_fit_params_b(
-    df: pd.DataFrame, params: tuple[float]
+    df: pd.DataFrame, params: tuple[float, float, float, float, float]
 ) -> None:
     """
     Parameters
@@ -84,7 +84,7 @@ def calculate_power_function_fit_params_b(
 
 
 def calculate_power_function_fit_params_c(
-    df: pd.DataFrame, params: tuple[float]
+    df: pd.DataFrame, params: tuple[float, float, float, float]
 ) -> None:
     """
     Parameters

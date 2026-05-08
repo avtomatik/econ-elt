@@ -16,7 +16,27 @@ def ingest_parquet_to_duckdb(parquet_path: Path, table_name: str):
         conn.execute(
             f"""
             CREATE OR REPLACE TABLE raw.{table_name} AS
-            SELECT *
+            SELECT
+                period,
+
+                CASE
+                    WHEN series_id = 'Ставка прайм-рейт, %'
+                        THEN 'prime_rate'
+
+                    WHEN series_id = 'Валовой объем внутренних частных инвестиций, млрд долл. США'
+                        THEN 'A006RC'
+
+                    WHEN series_id = 'Национальный доход, млрд долл. США'
+                        THEN 'A032RC'
+
+                    WHEN series_id = 'Валовой внутренний продукт, млрд долл. США'
+                        THEN 'A191RC'
+
+                    ELSE series_id
+                END AS series_id,
+
+                value
+
             FROM read_parquet('{parquet_path}');
             """
         )
