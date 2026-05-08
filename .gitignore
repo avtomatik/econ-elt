@@ -125,3 +125,6 @@ dmypy.json
 
 # Apple Desktop Services Store
 .DS_Store
+
+# DuckDB
+*.duckdb

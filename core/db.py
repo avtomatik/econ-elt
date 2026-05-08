@@ -8,21 +8,24 @@ from core.paths import DATA_DIR, WAREHOUSE_NAME
 logger = logging.getLogger(__name__)
 
 
-@contextmanager
-def get_connection(read_only: bool = False):
-    conn = duckdb.connect(
+def connect(read_only: bool = False) -> duckdb.DuckDBPyConnection:
+    return duckdb.connect(
         database=str(DATA_DIR / "processed" / WAREHOUSE_NAME),
         read_only=read_only,
     )
 
+
+@contextmanager
+def get_connection(read_only: bool = False):
+
+    conn = connect(read_only)
+
     try:
         yield conn
-        conn.commit()
 
-    except Exception as exc:
+    except Exception:
         logger.exception("Database connection failed.")
-        conn.rollback()
-        raise exc
+        raise
 
     finally:
         conn.close()
