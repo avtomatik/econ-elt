@@ -1,36 +1,33 @@
-from ingest.core.backend import stockpile_usa_hist
-from ingest.core.funcs import (calculate_power_function_fit_params_a,
-                               calculate_power_function_fit_params_b,
-                               calculate_power_function_fit_params_c)
+import logging
+from pathlib import Path
+
+from core.db import get_connection
+from core.paths import DATA_DIR
+
+logging.basicConfig(level=logging.INFO)
 
 
-def main(year_base: int = 1980) -> None:
-    """
-    Power Function Approximation
+def ingest_parquet_to_duckdb(parquet_path: Path, table_name: str):
 
-    Returns
-    -------
-    None
-        DESCRIPTION.
-    """
+    with get_connection() as conn:
 
-    SERIES_IDS = ["A191RC"]
-    PARAMS = (2800, 0.01, 0.5)
-    stockpile_usa_hist(SERIES_IDS).truncate(before=year_base).pipe(
-        calculate_power_function_fit_params_a, PARAMS
-    )
+        conn.execute("""CREATE SCHEMA IF NOT EXISTS raw;""")
 
-    SERIES_IDS = ["prime_rate", "A032RC"]
-    PARAMS = (4, 12, 9000, 3000, 0.87)
-    stockpile_usa_hist(SERIES_IDS).truncate(before=year_base).pipe(
-        calculate_power_function_fit_params_b, PARAMS
-    )
+        conn.execute(
+            f"""
+            CREATE OR REPLACE TABLE raw.{table_name} AS
+            SELECT *
+            FROM read_parquet('{parquet_path}');
+            """
+        )
 
-    SERIES_IDS = ["prime_rate", "A006RC"]
-    PARAMS = (1.5, 19, 1.7, 1760)
-    stockpile_usa_hist(SERIES_IDS).truncate(before=year_base).pipe(
-        calculate_power_function_fit_params_c, PARAMS
-    )
+        logging.info(f"Finished ingesting {table_name}.")
+
+
+def main():
+    for parquet_file in (DATA_DIR / "raw").glob("*.parquet"):
+        table_name = parquet_file.stem.replace("-", "_")
+        ingest_parquet_to_duckdb(parquet_file, table_name)
 
 
 if __name__ == "__main__":
