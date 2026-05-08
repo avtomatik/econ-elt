@@ -1,0 +1,44 @@
+warehouse:
+  database: data/processed/econ_elt.duckdb
+
+sources:
+  mc_connell_brue:
+    file: data/raw/mc-connell-brue.parquet
+    table: mc_connell_brue
+
+series:
+  gdp:
+    table: mc_connell_brue
+    y_col: A191RC
+    model: offset_power
+    params:
+      y0: 2800
+      a: 0.01
+      alpha: 0.5
+      min_year: 1980
+
+  income:
+    table: mc_connell_brue
+    x_col: prime_rate
+    y_col: A032RC
+    model: bounded_power
+    params:
+      tau1: 4
+      tau2: 12
+      u1: 9000
+      u2: 3000
+      alpha: 0.87
+      min_year: 1980
+
+  investment:
+    table: mc_connell_brue
+    x_col: prime_rate
+    y_col: A006RC
+    model: inverse_power
+    params:
+      x1: 1.5
+      x2: 19
+      y1: 1.7
+      y2: 1760
+      alpha: -2.734349067592543
+      min_year: 1980

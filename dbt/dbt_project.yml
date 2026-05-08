@@ -1,0 +1,16 @@
+name: econ_elt
+version: "1.0"
+config-version: 2
+
+profile: econ_elt
+
+model-paths: ["models"]
+
+models:
+  econ_elt:
+    raw:
+      +schema: raw
+    interim:
+      +schema: interim
+    marts:
+      +schema: marts

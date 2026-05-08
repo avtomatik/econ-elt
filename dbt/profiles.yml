@@ -1,0 +1,7 @@
+econ_elt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/processed/econ_elt.duckdb
+      threads: 4
